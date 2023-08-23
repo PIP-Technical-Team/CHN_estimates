@@ -18,10 +18,24 @@ df   <-
   lapply(c(2.15, 3.65, 6.85),
          \(.x) {
            pipapi::pip (country = "CHN",
-                        fill_gaps = FALSE,
+                        fill_gaps = TRUE,
                         povline = .x,
                         lkup = lkups$versions_paths[[v1]])
          }) |>
   rbindlist()
 
 haven::write_dta(df, fs::path(tdirp, "chn_proj.dta"))
+
+
+ggplot(df[reporting_year > 2018],
+       aes(x = reporting_year,
+           y = headcount,
+           color = reporting_level)) +
+  geom_line() +
+  theme_minimal() +
+  facet_wrap(vars(poverty_line),
+             # ncol = 1,
+             scales = "free_y") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank()
+        )
