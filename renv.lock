@@ -983,7 +983,6 @@
       "RemoteHost": "api.github.com",
       "RemoteRepo": "pipapi",
       "RemoteUsername": "PIP-technical-team",
-      "RemotePkgRef": "PIP-technical-team/pipapi@dev",
       "RemoteRef": "dev",
       "RemoteSha": "928df87b894d70193bde0b3570ba52c864d8137c",
       "Requirements": [
@@ -1008,7 +1007,7 @@
         "wbpip",
         "yaml"
       ],
-      "Hash": "6d305ae2c3fd2dc19d3a7170116f9ab8"
+      "Hash": "f871e77e439bcc91e3cf93e1cd6f7a5a"
     },
     "pipfun": {
       "Package": "pipfun",
@@ -1581,15 +1580,16 @@
     },
     "wbpip": {
       "Package": "wbpip",
-      "Version": "0.1.0",
+      "Version": "0.0.3",
       "Source": "GitHub",
+      "Remotes": "PIP-technical-team/pipload@new_pipeline",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "wbpip",
-      "RemoteUsername": "PIP-Technical-Team",
-      "RemotePkgRef": "PIP-Technical-Team/wbpip@master",
-      "RemoteRef": "master",
-      "RemoteSha": "ddb5dcf0f642695c950e6459f0c2f2032b42632f",
+      "RemoteUsername": "PIP-Technical-team",
+      "RemotePkgRef": "PIP-Technical-team/wbpip@refactor_gd",
+      "RemoteRef": "refactor_gd",
+      "RemoteSha": "30048dd7de2135baf801715083bd33672021c8f9",
       "Requirements": [
         "MASS",
         "R",
@@ -1601,7 +1601,7 @@
         "dplyr",
         "rlang"
       ],
-      "Hash": "7cbc6750e5bd576708ba753ddd7547a9"
+      "Hash": "cc443bc65fc3f0b8797bec3e5d380725"
     },
     "webutils": {
       "Package": "webutils",

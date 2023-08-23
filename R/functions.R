@@ -11,28 +11,20 @@ gd_pop_wlf <- function(pl) {
                                   version = pl$version)
 
   levels     <- dt[, unique(reporting_level)]
-  welfare    <- vector("list", length(levels))
-  population <- vector("list", length(levels))
-  for (i in seq_along(levels)) {
-    nn <- levels[[i]]
-    welfare[[i]] <- dt[reporting_level == nn,
-                       welfare]
-    population[[i]] <- dt[reporting_level == nn,
-                          weight]
-  }
 
-  names(welfare) <- names(population) <- levels
-
-  id <- paste(pl$country_code,
-              pl$surveyid_year,
-              pl$welfare_type,
-              sep = "_")
+  xx <- map(levels,
+            ~{
+              list(welfare = dt[reporting_level == .x,
+                                welfare],
+                   population = dt[reporting_level == .x,
+                                   weight])
+            })
+  names(xx) <- levels
 
   # attr(welfare, "id") <- attr(population, "id") <- id
 
 
-  return(list(welfare    = welfare,
-              population = population))
+  return(xx)
 }
 
 

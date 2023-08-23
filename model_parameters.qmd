@@ -2,6 +2,7 @@
 title: "CHN model parameters"
 ---
 
+## Load data
 ```{r}
 
 library(data.table)
@@ -97,10 +98,55 @@ pl <- split(fpf, by = "id")
 
 vctrs <- map(pl, gd_pop_wlf)
 names(vctrs) <- fpf[, id]
+```
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Get distributions   ---------
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Model parameters
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# model parameters   ---------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.x <- vctrs$CHN_2020_consumption
+.x <- .x$rural
+
+welfare <- .x$welfare
+population <- .x$population
+
+gd <- 
+get_gd_select_lorenz(welfare,
+                     population, 
+                     povline = 2.15, 
+                     complete = TRUE) 
+
+
+
+selected_lorenz <- map(
+  c("rural", "urban"),
+  ~{
+    welfare    <- w[[.x]]                   
+    population <- p[[.x]]
+    povlines   <- seq(from = 1, 
+                     to   = 4, 
+                     by   = .1)
+    map_chr(povlines, 
+                 ~{
+                     y <- get_gd_select_lorenz(welfare,
+                         population, 
+                         povline = .x) 
+                     y <- y$selected_lorenz$for_pov
+                 }) |> 
+      data.table(poverty_line = povlines, 
+                 lorenz = _, 
+                 reporting_level = .x)
+  }
+)
+
+```
+
+## Distributions
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Get distributions   --------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 rd <-
   map(.x = names(vctrs),
@@ -135,4 +181,3 @@ walk(rd, fmt_sve, version = version)
 
 # rd <- rbindlist(rd, use.names = TRUE)
 ```
-
